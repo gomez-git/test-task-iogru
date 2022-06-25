@@ -3,6 +3,7 @@ import * as dao from '../dao/users.js';
 const mapping = {
   GET: dao.getAll,
   POST: dao.create,
+  DELETE: dao.del,
 };
 
 export default async (req, res) => {

@@ -13,3 +13,9 @@ export const create = async (req) => {
   return user;
 };
 
+export const del = async (req) => {
+  const { id } = req.params;
+  const user = await User.deleteOne({ _id: id });
+
+  return user;
+};

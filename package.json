@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/gomez-git/test-task-iogru/issues"
   },
-  "homepage": "https://github.com/gomez-git/test-task-iogru#readme"
+  "homepage": "https://github.com/gomez-git/test-task-iogru#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
 }

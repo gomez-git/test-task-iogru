@@ -1,0 +1,23 @@
+{
+  "name": "test-task-iogru",
+  "version": "1.0.0",
+  "description": "Solution of test task from Iogru",
+  "main": "bin/app.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon",
+    "start": "bin/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gomez-git/test-task-iogru.git"
+  },
+  "keywords": [],
+  "author": "Konstantin Kuzin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gomez-git/test-task-iogru/issues"
+  },
+  "homepage": "https://github.com/gomez-git/test-task-iogru#readme"
+}

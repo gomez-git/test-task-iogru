@@ -1,6 +1,7 @@
 import * as dao from '../dao/users.js';
 
 const mapping = {
+  GET: dao.getAll,
   POST: dao.create,
 };
 

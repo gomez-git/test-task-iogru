@@ -4,6 +4,7 @@ import usersController from '../controllers/users.js';
 const router = new Router();
 
 router.route('/')
+  .get(usersController)
   .post(usersController);
 
 export default router;

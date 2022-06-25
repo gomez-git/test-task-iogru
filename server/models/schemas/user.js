@@ -10,7 +10,7 @@ export default new Schema({
     minLength: 6,
     maxLength: 20,
     match: [
-      /^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{6,20}$/,
+      /^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{5,19}$/,
       'Login can include only AZ, az, 09, .-',
     ],
   },
@@ -19,7 +19,7 @@ export default new Schema({
     required: 'Password is required field',
     minLength: 8,
     match: [
-      /^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{8,}$/,
+      /^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{7,}$/,
       'Password can include only AZ, az, 09, .-',
     ],
   },

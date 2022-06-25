@@ -4,6 +4,7 @@ import usersController from '../controllers/users.js';
 const router = new Router();
 
 router.route('/:id')
+  .patch(usersController)
   .delete(usersController);
 router.route('/')
   .get(usersController)

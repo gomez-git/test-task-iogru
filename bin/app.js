@@ -9,6 +9,6 @@ const port = process.env.PORT ?? 5000;
 
 app.listen(port, () => {
   console.log(`Server up on http://localhost:${port}/`);
-  mongoose.connect(process.env.DATABASE_URL);
-  console.log('Database connected!');
+  mongoose.connect(process.env.DATABASE_URL)
+    .then(() => console.log('Database connected!'));
 });

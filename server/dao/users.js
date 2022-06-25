@@ -13,6 +13,16 @@ export const create = async (req) => {
   return user;
 };
 
+export const update = async (req) => {
+  const { id } = req.params;
+  const { login: newLogin, password } = req.body;
+  await User.validate({ login: newLogin, password }, ['login', 'password']);
+  const user = await User
+    .updateOne({ _id: id }, { login: newLogin, password, updated_at: Date.now() });
+
+  return user;
+};
+
 export const del = async (req) => {
   const { id } = req.params;
   const user = await User.deleteOne({ _id: id });

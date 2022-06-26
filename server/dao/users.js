@@ -15,10 +15,27 @@ export const create = async (req) => {
 
 export const update = async (req) => {
   const { id } = req.params;
-  const { login: newLogin, password } = req.body;
-  await User.validate({ login: newLogin, password }, ['login', 'password']);
+  const { login: newLogin, oldPassword, newPassword } = req.body;
+
+  let updatedValues = {};
+  let updatedValuesArray = [];
+
+  if (newLogin) {
+    updatedValues = { login: newLogin };
+    updatedValuesArray = ['login'];
+  }
+  if (newPassword) {
+    const { password } = await User.findById(id);
+    if (password !== oldPassword) {
+      throw new Error('Incorrect old password');
+    }
+    updatedValues = { ...updatedValues, password: newPassword };
+    updatedValuesArray = [...updatedValuesArray, 'password'];
+  }
+
+  await User.validate({ ...updatedValues }, updatedValuesArray);
   const user = await User
-    .updateOne({ _id: id }, { login: newLogin, password, updated_at: Date.now() });
+    .updateOne({ _id: id }, { ...updatedValues, updated_at: Date.now() });
 
   return user;
 };

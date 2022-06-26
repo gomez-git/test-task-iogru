@@ -70,3 +70,8 @@ export const addToken = async (login, refreshToken) => {
   return true;
 };
 
+export const deleteToken = async (refreshToken) => {
+  await User.updateOne({ refreshToken }, { refreshToken: null });
+
+  return true;
+};

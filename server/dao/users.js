@@ -63,3 +63,10 @@ export const del = async (req) => {
 
   return user;
 };
+
+export const addToken = async (login, refreshToken) => {
+  await User.updateOne({ login }, { refreshToken });
+
+  return true;
+};
+

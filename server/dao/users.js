@@ -23,22 +23,22 @@ export const update = async (req) => {
   const { login: newLogin, oldPassword, newPassword } = req.body;
 
   let updatedValues = {};
-  let updatedValuesArray = [];
 
   if (newLogin) {
     updatedValues = { login: newLogin };
-    updatedValuesArray = ['login'];
+    await User.validate({ ...updatedValues }, ['login']);
   }
   if (newPassword) {
     const { password } = await User.findById(id);
     if (encrypt(oldPassword) !== password) {
       throw new Error('Incorrect old password');
     }
+    if (!/^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{7,}$/.test(newPassword)) {
+      throw new Error('Password can include only AZ, az, 09, .-');
+    }
     updatedValues = { ...updatedValues, password: encrypt(newPassword) };
-    updatedValuesArray = [...updatedValuesArray, 'password'];
   }
 
-  await User.validate({ ...updatedValues }, updatedValuesArray);
   const user = await User
     .updateOne({ _id: id }, { ...updatedValues, updated_at: Date.now() });
 

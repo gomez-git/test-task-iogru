@@ -2,6 +2,20 @@ import User from '../models/User.js';
 import encrypt from '../helpers/encrypt.js';
 import validatePassword from '../helpers/passwordValidation.js';
 
+export const check = async (req) => {
+  const { login, password } = req.body;
+  const user = await User.findOne({ login });
+
+  if (!user) {
+    throw new Error('User doesn\'t exist');
+  }
+  if (encrypt(password) !== user.password) {
+    throw new Error('Incorrect password');
+  }
+
+  return user;
+};
+
 export const getAll = async () => {
   const users = await User.find();
 

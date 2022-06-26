@@ -13,8 +13,7 @@ export const create = async (req) => {
 
   validatePassword(password);
 
-  const cryptoPassword = encrypt(password);
-  const user = await User.create({ login, password: cryptoPassword });
+  const user = await User.create({ login, password: encrypt(password) });
 
   return user;
 };

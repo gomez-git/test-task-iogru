@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { addToken } from '../dao/users.js';
+import { addToken, deleteToken } from '../dao/users.js';
 
 const generateToken = (payload, secret, opts = {}) => jwt.sign(payload, secret, opts);
 
@@ -16,3 +16,13 @@ export const login = async (req, res) => {
   }
 };
 
+export const logout = async (req, res) => {
+  try {
+    const { refreshToken } = req.body;
+    await deleteToken(refreshToken);
+
+    res.sendStatus(204);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

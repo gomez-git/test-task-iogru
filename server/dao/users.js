@@ -1,4 +1,5 @@
 import User from '../models/User.js';
+import encrypt from '../helpers/encrypt.js';
 
 export const getAll = async () => {
   const users = await User.find();
@@ -11,7 +12,8 @@ export const create = async (req) => {
   if (!/^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{7,}$/.test(password)) {
     throw new Error('Password can include only AZ, az, 09, .-');
   }
-  const user = await User.create({ login, password });
+  const cryptoPassword = encrypt(password);
+  const user = await User.create({ login, password: cryptoPassword });
 
   return user;
 };
@@ -29,10 +31,10 @@ export const update = async (req) => {
   }
   if (newPassword) {
     const { password } = await User.findById(id);
-    if (password !== oldPassword) {
+    if (encrypt(oldPassword) !== password) {
       throw new Error('Incorrect old password');
     }
-    updatedValues = { ...updatedValues, password: newPassword };
+    updatedValues = { ...updatedValues, password: encrypt(newPassword) };
     updatedValuesArray = [...updatedValuesArray, 'password'];
   }
 

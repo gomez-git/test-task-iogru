@@ -8,6 +8,9 @@ export const getAll = async () => {
 
 export const create = async (req) => {
   const { login, password } = req.body;
+  if (!/^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{7,}$/.test(password)) {
+    throw new Error('Password can include only AZ, az, 09, .-');
+  }
   const user = await User.create({ login, password });
 
   return user;

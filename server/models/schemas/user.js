@@ -17,11 +17,6 @@ export default new Schema({
   password: {
     type: String,
     required: 'Password is required field',
-    minLength: 8,
-    match: [
-      /^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{7,}$/,
-      'Password can include only AZ, az, 09, .-',
-    ],
   },
   created_at: {
     type: Date,

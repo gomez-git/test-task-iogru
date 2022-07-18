@@ -2,11 +2,10 @@
   "name": "@gomez-git/test-task-iogru",
   "version": "1.0.0",
   "description": "Solution of test task from Iogru",
-  "main": "bin/app.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
     "dev": "nodemon",
-    "start": "bin/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

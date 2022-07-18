@@ -1,5 +1,5 @@
 {
-  "name": "test-task-iogru",
+  "name": "@gomez-git/test-task-iogru",
   "version": "1.0.0",
   "description": "Solution of test task from Iogru",
   "main": "bin/app.js",

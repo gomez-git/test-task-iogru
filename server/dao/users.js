@@ -2,7 +2,7 @@ import User from '../models/User.js';
 import encrypt from '../helpers/encrypt.js';
 import validatePassword from '../helpers/passwordValidation.js';
 
-export const check = async (req) => {
+export const authentication = async (req) => {
   const { login, password } = req.body;
   const user = await User.findOne({ login });
 

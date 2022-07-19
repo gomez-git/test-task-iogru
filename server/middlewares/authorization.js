@@ -15,18 +15,18 @@ export default (req, res, next) => {
     res.locals.user = user;
     next();
   } catch ({ name, message }) {
-    if (name === 'TokenExpiredError') {
-      res.sendStatus(401);
-      return;
+    switch (name) {
+      case 'TokenExpiredError':
+        res.status(401).json({ message });
+        return;
+      case 'JsonWebTokenError':
+        res.status(400).json({ message });
+        return;
+      case 'NotBeforeError':
+        res.status(403).json({ message });
+        return;
+      default:
+        res.status(500).json({ message });
     }
-    if (name === 'JsonWebTokenError') {
-      res.sendStatus(400);
-      return;
-    }
-    if (name === 'NotBeforeError') {
-      res.sendStatus(403);
-      return;
-    }
-    res.status(500).json({ message });
   }
 };

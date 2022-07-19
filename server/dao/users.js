@@ -1,6 +1,6 @@
 import User from '../models/User.js';
-import encrypt from '../helpers/encrypt.js';
-import validatePassword from '../helpers/passwordValidation.js';
+import encrypt from '../utils/encrypt.js';
+import validatePassword from '../utils/passwordValidation.js';
 
 export const authentication = async (req) => {
   const { login, password } = req.body;

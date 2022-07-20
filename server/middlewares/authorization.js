@@ -8,11 +8,15 @@ export default (req, res, next) => {
     }
     const [method, token] = req.headers.authorization.split(' ');
     if (method !== 'Bearer') {
-      res.status(400).json({ message: 'Unsupported auth header' });
+      res.status(400).json({ message: 'Unsupported auth method' });
       return;
     }
-    const user = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    res.locals.user = user;
+    res.locals.user = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    res.locals.token = jwt.sign(
+      { id: res.locals.user.id },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: '15m' },
+    );
     next();
   } catch ({ name, message }) {
     switch (name) {

@@ -1,0 +1,23 @@
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+    ports:
+      - '$PORT:$PORT'
+    environment:
+      NODE_ENV: production
+      MONGODB_CONNSTRING: mongodb://mongo:27017/iogru
+    depends_on:
+      - mongo
+
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo:/data/db
+
+volumes:
+  mongo:

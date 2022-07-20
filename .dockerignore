@@ -1,0 +1,4 @@
+node_modules/
+.eslintrc.yml
+.DS_Store
+.env

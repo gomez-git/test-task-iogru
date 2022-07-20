@@ -14,10 +14,10 @@ export default class RootController {
     }
   }
 
-  static async signin(req, res) {
+  static async signin(_req, res) {
     try {
-      const { login: user } = req.body;
-      const token = generateToken({ user }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+      const { _id: id } = res.locals.user;
+      const token = generateToken({ id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
 
       res.json({ token });
     } catch (err) {

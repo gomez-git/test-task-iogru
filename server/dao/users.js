@@ -39,8 +39,12 @@ export const create = async (req) => {
   return user;
 };
 
-export const update = async (req) => {
+export const update = async (req, res) => {
   const { id } = req.params;
+  const { id: userId } = res.locals.user;
+  if (id !== userId) {
+    throw new Error('Access denied');
+  }
   const { username: newUsername, oldPassword, newPassword } = req.body;
 
   let updatedValues = {};
@@ -64,21 +68,11 @@ export const update = async (req) => {
   return user;
 };
 
-export const del = async (req) => {
+export const deleteUser = async (req, res) => {
   const { id } = req.params;
-  const user = await User.deleteOne({ _id: id });
-
-  return user;
-};
-
-export const addToken = async (username, refreshToken) => {
-  await User.updateOne({ username }, { refreshToken });
-
-  return true;
-};
-
-export const deleteToken = async (refreshToken) => {
-  await User.updateOne({ refreshToken }, { refreshToken: null });
-
-  return true;
+  const { id: userId } = res.locals.user;
+  if (id !== userId) {
+    throw new Error('Access denied');
+  }
+  await User.deleteOne({ _id: req.params.id });
 };

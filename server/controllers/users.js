@@ -29,11 +29,15 @@ export default class UsersController {
 
   static async update(req, res) {
     try {
-      await UsersDAO.update(req);
+      await UsersDAO.update(req, res);
       const { token } = res.locals;
 
       res.json({ token });
     } catch ({ code, message }) {
+      if (message === 'Access denied') {
+        res.sendStatus(403);
+        return;
+      }
       if (code === 11000) {
         res.status(400).json({ message: 'Username already taken' });
         return;
@@ -48,10 +52,14 @@ export default class UsersController {
 
   static async delete(req, res) {
     try {
-      await UsersDAO.del(req);
+      await UsersDAO.deleteUser(req, res);
 
       res.sendStatus(204);
     } catch ({ message }) {
+      if (message === 'Access denied') {
+        res.sendStatus(403);
+        return;
+      }
       res.status(500).json({ message });
     }
   }

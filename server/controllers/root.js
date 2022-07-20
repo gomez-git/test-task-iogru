@@ -1,28 +1,27 @@
 import jwt from 'jsonwebtoken';
-import { addToken, deleteToken } from '../dao/users.js';
+import { create } from '../dao/users.js';
 
 const generateToken = (payload, secret, opts = {}) => jwt.sign(payload, secret, opts);
 
-export const login = async (req, res) => {
-  try {
-    const { login: user } = req.body;
-    const accessToken = generateToken({ user }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
-    const refreshToken = generateToken({ user }, process.env.REFRESH_TOKEN_SECRET);
-    await addToken(user, refreshToken);
+export default class RootController {
+  static async signup(req, res) {
+    try {
+      const user = await create(req);
 
-    res.json({ accessToken, refreshToken });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+      res.status(201).json(user);
+    } catch ({ message }) {
+      res.status(500).json({ message });
+    }
   }
-};
 
-export const logout = async (req, res) => {
-  try {
-    const { refreshToken } = req.body;
-    await deleteToken(refreshToken);
+  static async signin(req, res) {
+    try {
+      const { login: user } = req.body;
+      const token = generateToken({ user }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
 
-    res.sendStatus(204);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+      res.json({ token });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
   }
-};
+}

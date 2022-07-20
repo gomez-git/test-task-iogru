@@ -3,11 +3,15 @@ import * as UsersDAO from '../dao/users.js';
 export default class UsersController {
   static async getOne(req, res) {
     try {
-      const user = await UsersDAO.getOne(req);
+      const user = await UsersDAO.getOne(req, res);
       const { token } = res.locals;
 
       res.json({ user, token });
     } catch ({ message }) {
+      if (message === 'Access denied') {
+        res.sendStatus(403);
+        return;
+      }
       res.status(500).json({ message });
     }
   }

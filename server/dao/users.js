@@ -16,11 +16,18 @@ export const authentication = async (req) => {
   return user;
 };
 
-export const getAll = async () => {
-  const users = await User.find();
+export const getOne = async (req, res) => {
+  const { id } = req.params;
+  const { id: userId } = res.locals.user;
+  if (id !== userId) {
+    throw new Error('Access denied');
+  }
+  const user = await User.findById(id);
 
-  return users;
+  return user;
 };
+
+export const getAll = () => User.find();
 
 export const create = async (req) => {
   const { username, password } = req.body;

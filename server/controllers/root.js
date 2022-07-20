@@ -9,7 +9,15 @@ export default class RootController {
       const user = await create(req);
 
       res.status(201).json(user);
-    } catch ({ message }) {
+    } catch ({ code, message }) {
+      if (code === 11000) {
+        res.status(400).json({ message: 'Username already taken' });
+        return;
+      }
+      if (/^Password/.test(message)) {
+        res.status(400).json({ message });
+        return;
+      }
       res.status(500).json({ message });
     }
   }

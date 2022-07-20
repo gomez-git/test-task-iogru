@@ -26,7 +26,15 @@ export default class UsersController {
       await UsersDAO.update(req);
 
       res.sendStatus(204);
-    } catch ({ message }) {
+    } catch ({ code, message }) {
+      if (code === 11000) {
+        res.status(400).json({ message: 'Username already taken' });
+        return;
+      }
+      if (/^Password/.test(message)) {
+        res.status(400).json({ message });
+        return;
+      }
       res.status(500).json({ message });
     }
   }

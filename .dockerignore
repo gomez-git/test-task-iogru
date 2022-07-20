@@ -1,4 +1,4 @@
 node_modules/
-.eslintrc.yml
+.git/
 .DS_Store
 .env

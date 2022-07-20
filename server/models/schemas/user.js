@@ -18,7 +18,6 @@ export default new Schema({
     type: String,
     required: 'Password is required field',
   },
-  refreshToken: String,
   created_at: {
     type: Date,
     default: Date.now,

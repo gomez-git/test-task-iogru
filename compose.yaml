@@ -9,7 +9,6 @@ services:
       NODE_ENV: production
       MONGODB_CONNSTRING: mongodb://mongo:27017/iogru
       ACCESS_TOKEN_SECRET: $ACCESS_TOKEN_SECRET
-      REFRESH_TOKEN_SECRET: $REFRESH_TOKEN_SECRET
       PASSWORD_SECRET: $PASSWORD_SECRET
     depends_on:
       - mongo

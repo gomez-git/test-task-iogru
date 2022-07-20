@@ -3,15 +3,15 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 export default new Schema({
-  login: {
+  username: {
     type: String,
-    required: 'Login is required field',
+    required: 'Username is required field',
     unique: true,
     minLength: 6,
     maxLength: 20,
     match: [
       /^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{5,19}$/,
-      'Login can include only AZ, az, 09, .-',
+      'Username can include only AZ, az, 09, .-',
     ],
   },
   password: {

@@ -3,8 +3,8 @@ import encrypt from '../utils/encrypt.js';
 import validatePassword from '../utils/passwordValidation.js';
 
 export const authentication = async (req) => {
-  const { login, password } = req.body;
-  const user = await User.findOne({ login });
+  const { username, password } = req.body;
+  const user = await User.findOne({ username });
 
   if (!user) {
     throw new Error('User doesn\'t exist');
@@ -23,24 +23,24 @@ export const getAll = async () => {
 };
 
 export const create = async (req) => {
-  const { login, password } = req.body;
+  const { username, password } = req.body;
 
   validatePassword(password);
 
-  const user = await User.create({ login, password: encrypt(password) });
+  const user = await User.create({ username, password: encrypt(password) });
 
   return user;
 };
 
 export const update = async (req) => {
   const { id } = req.params;
-  const { login: newLogin, oldPassword, newPassword } = req.body;
+  const { username: newUsername, oldPassword, newPassword } = req.body;
 
   let updatedValues = {};
 
-  if (newLogin) {
-    updatedValues = { login: newLogin };
-    await User.validate({ ...updatedValues }, ['login']);
+  if (newUsername) {
+    updatedValues = { username: newUsername };
+    await User.validate(updatedValues, ['username']);
   }
   if (newPassword) {
     const { password } = await User.findById(id);
@@ -64,8 +64,8 @@ export const del = async (req) => {
   return user;
 };
 
-export const addToken = async (login, refreshToken) => {
-  await User.updateOne({ login }, { refreshToken });
+export const addToken = async (username, refreshToken) => {
+  await User.updateOne({ username }, { refreshToken });
 
   return true;
 };

@@ -1,14 +1,13 @@
 import { Router } from 'express';
-import authorization from '../middlewares/authorization.js';
-import usersController from '../controllers/users.js';
+import UsersController from '../controllers/users.js';
 
 const router = new Router();
 
 router.route('/:id')
-  .patch(authorization, usersController)
-  .delete(authorization, usersController);
+  .get(UsersController.getOne)
+  .patch(UsersController.update)
+  .delete(UsersController.delete);
 router.route('/')
-  .get(usersController)
-  .post(usersController);
+  .get(UsersController.getAll);
 
 export default router;

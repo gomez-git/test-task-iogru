@@ -12,5 +12,8 @@ start:
 start-dev:
 	npm run dev -s
 
+docker-up:
+	docker compose up
+
 lint:
 	npx eslint .
